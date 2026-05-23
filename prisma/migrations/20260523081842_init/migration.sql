@@ -1,0 +1,11 @@
+-- CreateTable
+CREATE TABLE "Sticker" (
+    "id" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "memo" TEXT NOT NULL DEFAULT '',
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Sticker_pkey" PRIMARY KEY ("id")
+);
