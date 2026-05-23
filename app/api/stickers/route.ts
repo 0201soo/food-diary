@@ -25,7 +25,17 @@ export async function POST(request: NextRequest) {
   const filename = `${randomUUID()}.png`;
   let imageUrl: string;
 
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
+  const onVercel = Boolean(process.env.VERCEL);
+  const hasBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+
+  if (onVercel && !hasBlob) {
+    return Response.json(
+      { error: "BLOB_READ_WRITE_TOKEN이 없습니다. Vercel Storage → Blob 스토어를 프로젝트에 연결한 뒤 재배포하세요." },
+      { status: 500 }
+    );
+  }
+
+  if (hasBlob) {
     const { put } = await import("@vercel/blob");
     const blob = await put(`stickers/${filename}`, buffer, {
       access: "public",
